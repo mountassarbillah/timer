@@ -5,7 +5,7 @@ interface AlarmOnToggleProps {
 }
 
 export default function AlarmOnToggle({ isActive }: AlarmOnToggleProps) {
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const prevIsActiveRef = useRef(isActive);
 
   useEffect(() => {
@@ -15,8 +15,10 @@ export default function AlarmOnToggle({ isActive }: AlarmOnToggleProps) {
         audioRef.current.play();
         // Stop after 10 seconds
         setTimeout(() => {
-          audioRef.current.pause();
-          audioRef.current.currentTime = 0;
+          if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+          }
         }, 10000);
       }
     }
